@@ -41,3 +41,14 @@ export const updateprofile = async (req, res) => {
     return res.status(500).json({ message: "Something went wrong" });
   }
 };
+export const getUserById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const userdata = await users.findById(id);
+    if (!userdata) return res.status(404).json({ message: "User not found" });
+    return res.status(200).json(userdata);
+  } catch (error) {
+    console.error("Get user error:", error);
+    return res.status(500).json({ message: "Something went wrong" });
+  }
+};
