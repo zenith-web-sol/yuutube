@@ -21,7 +21,7 @@ const Sidebar = () => {
   const [isdialogeopen, setIsDialogeOpen] = useState(false);
 
   return (
-    <aside className="w-64 bg-white  border-r min-h-screen p-2">
+    <aside className="hidden min-h-screen w-56 shrink-0 border-r bg-background p-2 md:block lg:w-64">
       <nav className="space-y-1">
         <Link href="/">
           <Button variant="ghost" className="w-full justify-start">

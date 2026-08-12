@@ -59,27 +59,27 @@ const index = () => {
   //   },
   // ];
   if (loading) {
-    return <div>Loading..</div>;
+    return <main className="flex-1 p-4">Loading...</main>;
   }
 
   if (!videos) {
-    return <div>Video not found</div>;
+    return <main className="flex-1 p-4">Video not found.</main>;
   }
   return (
-    <div className="min-h-screen bg-white">
-      <div className="max-w-7xl mx-auto p-4">
+    <main className="min-w-0 flex-1 bg-background">
+      <div className="mx-auto max-w-7xl p-3 sm:p-4 lg:p-6">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <div className="lg:col-span-2 space-y-4">
             <Videoplayer video={videos} />
             <VideoInfo video={videos} />
-            <Comments videoId={id} />
+            <Comments videoId={videos._id} />
           </div>
           <div className="space-y-4">
             <RelatedVideos videos={video} />
           </div>
         </div>
       </div>
-    </div>
+    </main>
   );
 };
 

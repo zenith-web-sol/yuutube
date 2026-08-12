@@ -7,11 +7,11 @@ import { UserProvider } from "../lib/AuthContext";
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <UserProvider>
-      <div className="min-h-screen bg-white text-black">
+      <div className="min-h-screen bg-background text-foreground transition-colors">
         <title>YuuTube Clone</title>
         <Header />
         <Toaster />
-        <div className="flex">
+        <div className="flex min-w-0">
           <Sidebar />
           <Component {...pageProps} />
         </div>

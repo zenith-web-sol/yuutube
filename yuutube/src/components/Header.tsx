@@ -1,4 +1,4 @@
-import { Bell, Menu, Mic, Search, User, VideoIcon } from "lucide-react";
+import { Bell, Menu, Mic, Moon, Search, ShieldCheck, Sun, User, VideoIcon } from "lucide-react";
 import React, { useState } from "react";
 import { Button } from "./ui/button";
 import Link from "next/link";
@@ -16,7 +16,7 @@ import { useRouter } from "next/router";
 import { useUser } from "@/lib/AuthContext";
 
 const Header = () => {
-  const { user, logout, handlegooglesignin } = useUser();
+  const { user, logout, handlegooglesignin, theme, setTheme } = useUser();
   // const user: any = {
   //   id: "1",
   //   name: "John Doe",
@@ -38,9 +38,9 @@ const Header = () => {
     }
   };
   return (
-    <header className="flex items-center justify-between px-4 py-2 bg-white border-b">
-      <div className="flex items-center gap-4">
-        <Button variant="ghost" size="icon">
+    <header className="sticky top-0 z-50 flex items-center justify-between gap-2 border-b bg-background px-3 py-2 sm:px-4">
+      <div className="flex shrink-0 items-center gap-1 sm:gap-4">
+        <Button variant="ghost" size="icon" className="hidden sm:inline-flex">
           <Menu className="w-6 h-6" />
         </Button>
         <Link href="/" className="flex items-center gap-1">
@@ -49,13 +49,15 @@ const Header = () => {
               <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
             </svg>
           </div>
-          <span className="text-xl font-medium">Yuutube</span>
-          <span className="text-xs text-gray-400 ml-1">IN</span>
+          <span className="hidden text-xl font-medium sm:inline">Yuutube</span>
+          <span className="ml-1 hidden text-xs text-gray-400 lg:inline">
+            IN
+          </span>
         </Link>
       </div>
       <form
         onSubmit={handleSearch}
-        className="flex items-center gap-2 flex-1 max-w-2xl mx-4"
+        className="mx-2 hidden max-w-2xl flex-1 items-center gap-2 sm:flex"
       >
         <div className="flex flex-1">
           <Input
@@ -77,13 +79,33 @@ const Header = () => {
           <Mic className="w-5 h-5" />
         </Button>
       </form>
-      <div className="flex items-center gap-2">
+      <div className="flex shrink-0 items-center gap-1 sm:gap-2">
+        <Button variant="ghost" size="icon" className="rounded-full" onClick={() => setTheme(theme === "dark" ? "light" : "dark")} aria-label="Toggle theme">
+          {theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+        </Button>
+        <Button
+          variant="ghost"
+          size="icon"
+          className="rounded-full sm:hidden"
+          onClick={() => router.push("/search")}
+          aria-label="Search videos"
+        >
+          <Search className="h-5 w-5" />
+        </Button>
         {user ? (
           <>
-            <Button variant="ghost" size="icon">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="hidden sm:inline-flex"
+            >
               <VideoIcon className="w-6 h-6" />
             </Button>
-            <Button variant="ghost" size="icon">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="hidden sm:inline-flex"
+            >
               <Bell className="w-6 h-6" />
             </Button>
             <DropdownMenu>
@@ -98,7 +120,7 @@ const Header = () => {
                   </Avatar>
                 </Button>
               </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56" align="end" >
+              <DropdownMenuContent className="w-56" align="end">
                 {user?.channelname ? (
                   <DropdownMenuItem asChild>
                     <Link href={`/channel/${user?._id}`}>Your channel</Link>
@@ -124,6 +146,9 @@ const Header = () => {
                 <DropdownMenuItem asChild>
                   <Link href="/watch-later">Watch later</Link>
                 </DropdownMenuItem>
+                <DropdownMenuItem asChild>
+                  <Link href="/security"><ShieldCheck className="mr-2 h-4 w-4" />Account security</Link>
+                </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={logout}>Sign out</DropdownMenuItem>
               </DropdownMenuContent>
@@ -136,7 +161,7 @@ const Header = () => {
               onClick={handlegooglesignin}
             >
               <User className="w-4 h-4" />
-              Sign in
+              <span className="hidden sm:inline">Sign in</span>
             </Button>
           </>
         )}{" "}
